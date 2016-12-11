@@ -225,14 +225,20 @@ $(document).ready(function(){
                         txt += "<td class=capme_close>";
                         txt += "<span class=capme_close_button>close</span>";
                         txt += "</td></tr>";
-                        txt += "<tr>";
                         txt += "<td class=capme_text>";
 			if (txResult.indexOf("Dst Port:") >= 0) {
 				txt += txResult;
 			}
                         txt += txDebug;
                         txt += txError;
-                        txt += "</td></tr></table>";
+			txt += "</td>";
+			var xscript = $('input:radio[name=xscript]:checked').val();
+			if (xscript != "pcap") {
+			    txt += "<td class=capme_top_button>";
+			    txt += "<span class=capme_top_button>top</span>";
+			    txt += "</td>";
+			}
+			txt += "</table>";
                         $(".capme_div").after(txt);
                         theMsg("Request was successful");
                         $(".capme_div").hide();
@@ -256,6 +262,10 @@ $(document).ready(function(){
         $(".capme_result").remove();
         $(".capme_div").show();
         bON('.capme_submit');
+    });
+    $(document).on("click", "td.capme_top_button", function() {
+        $("html, body").animate({ scrollTop: 0 }, 0);
+	return false;
     });
 
     function theMsg(msg) {
